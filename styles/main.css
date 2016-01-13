@@ -1,0 +1,19 @@
+
+caption {
+  color: #5B48DE;
+  margin: 20px;
+}
+
+th {
+  background: lightblue;
+}
+
+td {
+  background-color: #BAABA5;
+  height: 50px;
+  width: 80px;
+}
+
+.racer_table td.active {
+  background-color: red;
+}
