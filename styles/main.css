@@ -17,3 +17,14 @@ td {
 .racer_table td.active {
   background-color: red;
 }
+
+.grid-box{
+  width:20px;
+  border:1px solid black;
+  display:inline-block;
+  height:15px;
+  margin-top:5px;
+}
+.next-col{
+  clear: both;
+}
