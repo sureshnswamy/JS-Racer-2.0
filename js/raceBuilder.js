@@ -36,7 +36,7 @@ $("#player2 td:first").addClass("active");
 
 };
 
-for (var i=0; i<= rowLength; i++) {
+for (var i=0; i< rowLength; i++) {
         $(".row").append('<td>');
         };
 
