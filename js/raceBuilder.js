@@ -31,8 +31,8 @@ $("#player1 td:first").addClass("active");
 
 $("#player2 td:first").addClass("active");
 
-var player1Move = 0;
-var player2Move = 0;
+ player1Move = 0;
+ player2Move = 0;
 
 };
 
