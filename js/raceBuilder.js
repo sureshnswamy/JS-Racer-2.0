@@ -27,10 +27,28 @@
     function resizeCanvas(){
         canvas.attr('width', $(window).get(0).innerWidth);
         canvas.attr('height', $(window).get(0).innerHeight);
+    };
+
+     resizeCanvas();
+     
+    $(window).resize(resizeCanvas);
+        // Canvas set to proper scaled width
+        // that should work well with every resolution
+           
        
+        var canvasWidth = canvas.width();
+        var canvasHeight = canvas.height();
+      // console.log(canvasHeight, canvasWidth);
+
+        //canvas boundary
+        var leftbndry = 0;
+        var topbndry = 0;
+        var rightbndry = canvasWidth;
+        var bottombndry = canvasHeight;
+
    
  // Create background image for game
     function initStageObjects(){
         car = new Car(src='images/orange_car.png',100,100);
             //canvas.width()/2,canvas.height()/2);
-    }
+    };
