@@ -151,3 +151,14 @@
   drawStageObjects();
   updateStage();
   };
+
+// load the car image on to the canvas
+  function drawStageObjects(){
+  context.save();   
+  context.translate(car.x,car.y);  //move car to x,y 
+  context.rotate((car.angle + car.drift) * Math.PI/180);    
+  context.drawImage(car.image, -25 , (-47 + (Math.abs(car.drift / 3))));    
+  context.restore();
+  };
+
+  
