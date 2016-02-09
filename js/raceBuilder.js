@@ -179,7 +179,7 @@
           }
   };
 
-// Faster the car is going, the worse it handels
+// Faster the car is going, the worse it handles
 
   if(car.handeling > car.minGrip){
       car.handeling = car.grip - car.speed;
@@ -188,7 +188,7 @@
       car.handeling = car.minGrip + 1;
   }
 
-// General car handeling when turning    
+// General car handling when turning    
   if(car.left){
       car.angle = car.angle - (car.handeling * car.speed/car.topSpeed);
     
@@ -197,6 +197,27 @@
 
   };
 
+// Constant application of friction / air resistance
+  if(car.speed > 0){
+  car.speed = car.speed - car.friction;
+  } else if(car.speed < 0) {
+         car.speed = car.speed + car.friction;
+        };
 
+//check canvas boutndary
+
+  if (car.x <leftbndry  || car.x > rightbndry ){
+      car.vx *= -1;
+  } else  {
+           car.vx = Math.sin(car.angle * Math.PI / 180) * car.speed;   
+           };
+
+  if (car.y < topbndry || car.y > bottombndry) {
+     car.vy *= -1;
+  } else {
+          car.vy = -Math.cos(car.angle * Math.PI / 180) * car.speed;
+        };
+
+        
   
 };
