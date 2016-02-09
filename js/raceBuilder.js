@@ -82,3 +82,28 @@
             car.backward = false;
         }
     });
+
+// Start & Stop button controlls
+  var playAnimation = true;
+
+  var startButton = $('#startGame');
+  var stopButton = $('#stopGame');
+  startButton.hide();   
+  var resetButton = $('#init');
+ 
+  time =getTimer();
+ 
+  startButton.click(function(){
+  $(this).hide();
+  stopButton.show();
+  playAnimation = true;
+  updateStage();
+  });
+
+  stopButton.click(function(){
+  $(this).hide();
+  startButton.show();
+  playAnimation = false;
+  var time = getTimer();
+  console.log(time/1000 +"seconds");
+  });
