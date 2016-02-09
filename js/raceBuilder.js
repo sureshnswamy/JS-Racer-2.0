@@ -45,14 +45,6 @@ $(document).ready(function(){
   var rightbndry = canvasWidth;
   var bottombndry = canvasHeight;
 
-   
-// ---Create background image for game---//
-
-    function initStageObjects(){
-        car = new Car(src='images/orange_car.png',100,100);
-            //canvas.width()/2,canvas.height()/2);
-    };
-
 // ---Keyboard event listeners---//
 
   $(window).keydown(function(e){
@@ -91,8 +83,6 @@ $(document).ready(function(){
   startButton.hide();   
   var resetButton = $('#init');
  
-  time =getTimer();
- 
   startButton.click(function(){
   $(this).hide();
   stopButton.show();
@@ -109,8 +99,16 @@ $(document).ready(function(){
   });
 
   resetButton.click(function() {
+    start_time =new Date().getTime();
     initialise();
+    
   });
+
+ function initialise(){
+  initStageObjects();
+  drawStageObjects();
+  updateStage();
+  };
 
 //---- Car object and properties---//
   function Car(src, x, y){        
@@ -140,19 +138,14 @@ $(document).ready(function(){
     this.down = false;
     }
 
+
  //--- Create any objects needed for animation ---//
   function initStageObjects(){
     car = new Car(src='images/orange_car.png',100,100);
      //canvas.width()/2,canvas.height()/2);
   };
 
-  function initialise(){
-    initStageObjects();
-    drawStageObjects();
-    updateStage();
-  };
-
-// ---load the car image on to the canvas---//
+ // ---load the car image on to the canvas---//
   function drawStageObjects(){
   context.save();   
   context.translate(car.x,car.y);  //move car to x,y 
@@ -169,63 +162,70 @@ $(document).ready(function(){
     context.beginPath();
   };
 
- function updateStageObjects(){
+  function updateStageObjects(){
        
-//----Car acceleration to top speed---//
+    //----Car acceleration to top speed---//
 
-  if(car.forward){
-      if(car.speed < car.topSpeed){
-          car.speed = car.speed + car.acceleration;
-      }            
-  }        
-  else if(car.backward){
-          if(car.speed < 1){
-          car.speed = car.speed - car.reverse;    
-          }
-          else if(car.speed > 1){
-          car.speed = car.speed - car.brakes;
-          }
+    if(car.forward){
+        if(car.speed < car.topSpeed){
+            car.speed = car.speed + car.acceleration;
+        }            
+    }        
+    else if(car.backward){
+            if(car.speed < 1){
+            car.speed = car.speed - car.reverse;    
+            }
+            else if(car.speed > 1){
+            car.speed = car.speed - car.brakes;
+            }
+    };
+
+    //--- Faster the car is going, the worse it handles---//
+
+    if(car.handeling > car.minGrip){
+        car.handeling = car.grip - car.speed;
+    }
+    else{
+        car.handeling = car.minGrip + 1;
+    }
+
+    // General car handling when turning    
+   
+    if(car.left){
+        car.angle = car.angle - (car.handeling * car.speed/car.topSpeed);
+      
+    } else if(car.right){
+        car.angle = car.angle + (car.handeling * car.speed/car.topSpeed);    
+    };
+
+    // Constant application of friction / air resistance
+    if(car.speed > 0){
+    car.speed = car.speed - car.friction;
+    } else if(car.speed < 0) {
+           car.speed = car.speed + car.friction;
+          };
+
+    //check canvas boutndary
+
+    if (car.x <leftbndry  || car.x > rightbndry ){
+        car.vx *= -1;
+    } else  {
+             car.vx = Math.sin(car.angle * Math.PI / 180) * car.speed;   
+             };
+
+    if (car.y < topbndry || car.y > bottombndry) {
+       car.vy *= -1;
+    } else {
+            car.vy = -Math.cos(car.angle * Math.PI / 180) * car.speed;
+          };
+
+    // Update car velocity (speed + direction)
+    console.log(leftbndry,topbndry,  rightbndry, bottombndry, car.x, car.y)
+        
+    // Plot the new velocity into x and y cords
+    car.y = car.y + car.vy;
+    car.x = car.x + car.vx;
   };
-
-//--- Faster the car is going, the worse it handles---//
-
-  if(car.handeling > car.minGrip){
-      car.handeling = car.grip - car.speed;
-  }
-  else{
-      car.handeling = car.minGrip + 1;
-  }
-
-// General car handling when turning    
-  if(car.left){
-      car.angle = car.angle - (car.handeling * car.speed/car.topSpeed);
-    
-  } else if(car.right){
-      car.angle = car.angle + (car.handeling * car.speed/car.topSpeed);    
-
-  };
-
-// Constant application of friction / air resistance
-  if(car.speed > 0){
-  car.speed = car.speed - car.friction;
-  } else if(car.speed < 0) {
-         car.speed = car.speed + car.friction;
-        };
-
-//check canvas boutndary
-
-  if (car.x <leftbndry  || car.x > rightbndry ){
-      car.vx *= -1;
-  } else  {
-           car.vx = Math.sin(car.angle * Math.PI / 180) * car.speed;   
-           };
-
-  if (car.y < topbndry || car.y > bottombndry) {
-     car.vy *= -1;
-  } else {
-          car.vy = -Math.cos(car.angle * Math.PI / 180) * car.speed;
-        };
-
 // Main animation loop
  
   function updateStage(){
@@ -240,5 +240,5 @@ $(document).ready(function(){
       
 // Initialise the animation loop
     initialise();
-  };
+  
 });
