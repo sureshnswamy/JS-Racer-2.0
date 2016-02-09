@@ -1,51 +1,45 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
 
   <!-- Basic Page Needs-->
 
   <meta charset="utf-8">
-  <title>js-racer-release-R-3.0</title>
+  <title>js-canvas-racer-version 2.0</title>
   
 
-  <!-- Javascript Specific Metas-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
- 
-
-  <script type="text/javascript"src="js/raceBuilder.js"  ></script>
+  <!-- Javascript  Metas-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <script type="text/javascript"src="js/racer.js"  ></script>
 
   <!-- Mobile Specific Metas-->
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- FONT-->
-
   <!--<link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'> -->
 
   <!-- CSS -->
-
-  <link rel="stylesheet" type="text/css" href="styles/main.css">
+  <link rel="stylesheet" type="text/css" href="styles/main.css" media ="all">
   <link rel="stylesheet" type="text/css" href="styles/normalize.css">
+
 </head>
 
+
 <body>
-
-  <div id = "container">
-  <h3>Welcome to the JS Drag Race Challenge</h3>
-  <h3>Player 1 please press key P and Player 2 press key Q to play </h3>
-
-  <table id="racer_table">
-  
-  <tr id ="player1" class="row" >
-  <th>Player1 </th>  
-  </tr>
-  <tr id ="player2" class="row">
-  <th>Player2</th>
-  </tr>
-  </table>
     
-     
-  </div> 
-
+  <canvas id="canvas" width="500px" height="500px" ></canvas>
+      
+  <div id = "guide">
+    <h1> Use Up arrow to go forward <br> Down for reverse <br> Rt and Lt arrows for turning  Right and Left<br> </h1>
+  </div>
+      
+  <div id="stats">  </div>
+      
+  <div id="buttons">
+    <button id="startGame">Start</button>
+    <button id="stopGame">Stop</button>
+    <button id="init">Reset</button>
+  </div>
+   
 </body>
 </html>
