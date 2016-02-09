@@ -161,4 +161,29 @@
   context.restore();
   };
 
+ function updateStageObjects(){
+       
+// Faster the car is going, the worse it handels
+  if(car.handeling > car.minGrip){
+      car.handeling = car.grip - car.speed;
+  }
+  else{
+      car.handeling = car.minGrip + 1;
+  }
   
+  
+// Car acceleration to top speed
+  if(car.forward){
+      if(car.speed < car.topSpeed){
+          car.speed = car.speed + car.acceleration;
+      }            
+  }        
+  else if(car.backward){
+          if(car.speed < 1){
+          car.speed = car.speed - car.reverse;    
+          }
+          else if(car.speed > 1){
+          car.speed = car.speed - car.brakes;
+          }
+  };
+};
