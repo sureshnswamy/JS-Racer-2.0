@@ -111,3 +111,37 @@
   resetButton.click(function() {
     initialise();
   });
+
+// Car object and properties
+  function Car(src, x, y){        
+    this.image = new Image();
+    this.image.src = src;
+    
+    this.x = x;
+    this.y = y;
+    this.vx = 0;
+    this.vy = 0;
+    this.angle = 90;
+
+    this.topSpeed = 15;
+    this.acceleration = 0.1;
+    this.reverse = 0.1;
+    this.brakes = 0.3;
+    this.friction = 0.05;
+    this.handeling = 15;
+    this.grip = 15;
+    this.minGrip = 5;
+    this.speed = 0;
+    this.drift = 0;
+
+    this.left = false;
+    this.up = false;
+    this.right = false;
+    this.down = false;
+    }
+
+ // Create any objects needed for animation        
+  function initStageObjects(){
+    car = new Car(src='images/orange_car.png',100,100);
+     //canvas.width()/2,canvas.height()/2);
+  };
