@@ -1,29 +1,28 @@
+// JS adds car & track image and control game
 
-// Canvas Variables
+$(document).ready(function(){
+
+// ---Canvas Variables ---//
 
   var canvas = $('#canvas');
   var context = canvas.get(0).getContext('2d');
   var start_time = new Date().getTime();
- var background = new Image();
- background.src = "images/Track2.png";
+  var background = new Image();
+  background.src = "images/Track2.png";
 
-  
-
-// set timer for the game
+// ----set timer for the game------//
 
   function getTimer () {
   return (new Date().getTime() - start_time); //milliseconds
   };
 
-// Keyboard Variables
+// ---Keyboard control Variables-----//
   var leftKey = 37;
   var upKey = 38;
   var rightKey = 39;
   var downKey = 40;
 
-
-
-// Resize canvas to full screen
+//--- Resize canvas to full screen---//
 
   function resizeCanvas(){
   canvas.attr('width', $(window).get(0).innerWidth);
@@ -32,7 +31,7 @@
 
   resizeCanvas();
 
-// Canvas set to proper scaled width
+//--- Canvas set to proper scaled width ---//
 // that should work well with every resolution
 
   $(window).resize(resizeCanvas);
@@ -40,50 +39,51 @@
   var canvasHeight = canvas.height();
   // console.log(canvasHeight, canvasWidth);
 
-//canvas boundary
+//----canvas boundary--//
   var leftbndry = 0;
   var topbndry = 0;
   var rightbndry = canvasWidth;
   var bottombndry = canvasHeight;
 
    
-// Create background image for game
+// ---Create background image for game---//
 
     function initStageObjects(){
         car = new Car(src='images/orange_car.png',100,100);
             //canvas.width()/2,canvas.height()/2);
     };
 
-// Keyboard event listeners
+// ---Keyboard event listeners---//
 
-    $(window).keydown(function(e){
-        var keyCode = e.keyCode;
+  $(window).keydown(function(e){
+      var keyCode = e.keyCode;
+  
+      if(keyCode == leftKey){
+          car.left = true;
+      } else if(keyCode == upKey){
+          car.forward = true;
+      } else if(keyCode == rightKey){
+          car.right = true;
+      } else if (keyCode == downKey){
+          car.backward = true;
+      }
+  });
+
+  $(window).keyup(function(e){
+    var keyCode = e.keyCode;
     
-        if(keyCode == leftKey){
-            car.left = true;
-        } else if(keyCode == upKey){
-            car.forward = true;
-        } else if(keyCode == rightKey){
-            car.right = true;
-        } else if (keyCode == downKey){
-            car.backward = true;
-        }
-    });
+    if(keyCode == leftKey){
+        car.left = false;
+    } else if(keyCode == upKey){
+        car.forward = false;
+    } else if(keyCode == rightKey){
+        car.right = false;
+    } else if (keyCode == downKey){
+        car.backward = false;
+    }
+  });
 
-      $(window).keyup(function(e){
-        var keyCode = e.keyCode;
-        if(keyCode == leftKey){
-            car.left = false;
-        } else if(keyCode == upKey){
-            car.forward = false;
-        } else if(keyCode == rightKey){
-            car.right = false;
-        } else if (keyCode == downKey){
-            car.backward = false;
-        }
-    });
-
-// Start & Stop button controlls
+// ---Start & Stop button controlls---//
   var playAnimation = true;
 
   var startButton = $('#startGame');
@@ -112,7 +112,7 @@
     initialise();
   });
 
-// Car object and properties
+//---- Car object and properties---//
   function Car(src, x, y){        
     this.image = new Image();
     this.image.src = src;
@@ -140,19 +140,19 @@
     this.down = false;
     }
 
- // Create any objects needed for animation        
+ //--- Create any objects needed for animation ---//
   function initStageObjects(){
     car = new Car(src='images/orange_car.png',100,100);
      //canvas.width()/2,canvas.height()/2);
   };
 
- function initialise(){
-  initStageObjects();
-  drawStageObjects();
-  updateStage();
+  function initialise(){
+    initStageObjects();
+    drawStageObjects();
+    updateStage();
   };
 
-// load the car image on to the canvas
+// ---load the car image on to the canvas---//
   function drawStageObjects(){
   context.save();   
   context.translate(car.x,car.y);  //move car to x,y 
@@ -161,9 +161,17 @@
   context.restore();
   };
 
+
+//Clear canvas before drawing 
+    
+  function clearCanvas(){
+    context.clearRect(0, 0, canvasWidth, canvasHeight);  
+    context.beginPath();
+  };
+
  function updateStageObjects(){
        
-// Car acceleration to top speed
+//----Car acceleration to top speed---//
 
   if(car.forward){
       if(car.speed < car.topSpeed){
@@ -179,7 +187,7 @@
           }
   };
 
-// Faster the car is going, the worse it handles
+//--- Faster the car is going, the worse it handles---//
 
   if(car.handeling > car.minGrip){
       car.handeling = car.grip - car.speed;
@@ -218,6 +226,19 @@
           car.vy = -Math.cos(car.angle * Math.PI / 180) * car.speed;
         };
 
-        
+// Main animation loop
+ 
+  function updateStage(){
+    clearCanvas();
+    updateStageObjects();
+    drawStageObjects();        
   
-};
+      if(playAnimation){
+        setTimeout(updateStage, 24);
+      };
+    };
+      
+// Initialise the animation loop
+    initialise();
+  };
+});
