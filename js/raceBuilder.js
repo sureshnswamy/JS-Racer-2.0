@@ -107,3 +107,7 @@
   var time = getTimer();
   console.log(time/1000 +"seconds");
   });
+
+  resetButton.click(function() {
+    initialise();
+  });
