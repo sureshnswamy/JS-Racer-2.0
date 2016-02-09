@@ -163,16 +163,8 @@
 
  function updateStageObjects(){
        
-// Faster the car is going, the worse it handels
-  if(car.handeling > car.minGrip){
-      car.handeling = car.grip - car.speed;
-  }
-  else{
-      car.handeling = car.minGrip + 1;
-  }
-  
-  
 // Car acceleration to top speed
+
   if(car.forward){
       if(car.speed < car.topSpeed){
           car.speed = car.speed + car.acceleration;
@@ -186,4 +178,25 @@
           car.speed = car.speed - car.brakes;
           }
   };
+
+// Faster the car is going, the worse it handels
+
+  if(car.handeling > car.minGrip){
+      car.handeling = car.grip - car.speed;
+  }
+  else{
+      car.handeling = car.minGrip + 1;
+  }
+
+// General car handeling when turning    
+  if(car.left){
+      car.angle = car.angle - (car.handeling * car.speed/car.topSpeed);
+    
+  } else if(car.right){
+      car.angle = car.angle + (car.handeling * car.speed/car.topSpeed);    
+
+  };
+
+
+  
 };
