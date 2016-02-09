@@ -145,3 +145,9 @@
     car = new Car(src='images/orange_car.png',100,100);
      //canvas.width()/2,canvas.height()/2);
   };
+
+ function initialise(){
+  initStageObjects();
+  drawStageObjects();
+  updateStage();
+  };
