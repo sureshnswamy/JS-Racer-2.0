@@ -217,16 +217,15 @@ $(document).ready(function(){
   time = getTimer();
   document.getElementById("stats").innerHTML= "Elapsed Time = "+time/1000 +" msec"+'<br/>'+"Car Speed =" + car.speed;
                                         
- //       $('#stats').html(car.speed);
-    //    $('#stats').html(leftbndry,topbndry,rightbndry, bottombndry, car.x, car.y);
+     //    $('#stats').html(leftbndry,topbndry,rightbndry, bottombndry, car.x, car.y);
         
 
     // Update car velocity (speed + direction)
   //  console.log(leftbndry,topbndry,  rightbndry, bottombndry, car.x, car.y)
         
-    // Plot the new velocity into x and y cords
-    car.y = car.y + car.vy;
-    car.x = car.x + car.vx;
+    // Set new velocity into x and y cords
+   car.y = car.y + car.vy;
+   car.x = car.x + car.vx;
   };
 // Main animation loop
  
