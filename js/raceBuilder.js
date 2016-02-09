@@ -219,6 +219,12 @@ $(document).ready(function(){
             car.vy = -Math.cos(car.angle * Math.PI / 180) * car.speed;
           };
 
+// display game stats  info  visually
+    document.getElementById("stats").innerHTML = "Speed =" + car.speed;
+ //       $('#stats').html(car.speed);
+    //    $('#stats').html(leftbndry,topbndry,rightbndry, bottombndry, car.x, car.y);
+        
+
     // Update car velocity (speed + direction)
     console.log(leftbndry,topbndry,  rightbndry, bottombndry, car.x, car.y)
         
