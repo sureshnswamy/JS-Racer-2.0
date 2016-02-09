@@ -6,12 +6,11 @@ $(document).ready(function(){
 
   var canvas = $('#canvas');
   var context = canvas.get(0).getContext('2d');
-  var start_time = new Date().getTime();
   var background = new Image();
   background.src = "images/Track2.png";
 
 // ----set timer for the game------//
-
+  start_time =new Date().getTime();
   function getTimer () {
   return (new Date().getTime() - start_time); //milliseconds
   };
@@ -77,7 +76,6 @@ $(document).ready(function(){
 
 // ---Start & Stop button controlls---//
   var playAnimation = true;
-
   var startButton = $('#startGame');
   var stopButton = $('#stopGame');
   startButton.hide();   
@@ -94,12 +92,10 @@ $(document).ready(function(){
   $(this).hide();
   startButton.show();
   playAnimation = false;
-  var time = getTimer();
-  console.log(time/1000 +"seconds");
-  });
+    });
 
   resetButton.click(function() {
-    start_time =new Date().getTime();
+  start_time =new Date().getTime(); 
     initialise();
     
   });
@@ -126,7 +122,7 @@ $(document).ready(function(){
     this.reverse = 0.1;
     this.brakes = 0.3;
     this.friction = 0.05;
-    this.handeling = 15;
+    this.handling = 15;
     this.grip = 15;
     this.minGrip = 5;
     this.speed = 0;
@@ -137,7 +133,6 @@ $(document).ready(function(){
     this.right = false;
     this.down = false;
     }
-
 
  //--- Create any objects needed for animation ---//
   function initStageObjects(){
@@ -153,7 +148,6 @@ $(document).ready(function(){
   context.drawImage(car.image, -25 , (-47 + (Math.abs(car.drift / 3))));    
   context.restore();
   };
-
 
 //Clear canvas before drawing 
     
@@ -182,20 +176,20 @@ $(document).ready(function(){
 
     //--- Faster the car is going, the worse it handles---//
 
-    if(car.handeling > car.minGrip){
-        car.handeling = car.grip - car.speed;
+    if(car.handling > car.minGrip){
+        car.handling = car.grip - car.speed;
     }
     else{
-        car.handeling = car.minGrip + 1;
+        car.handling = car.minGrip + 1;
     }
 
     // General car handling when turning    
    
     if(car.left){
-        car.angle = car.angle - (car.handeling * car.speed/car.topSpeed);
+        car.angle = car.angle - (car.handling * car.speed/car.topSpeed);
       
     } else if(car.right){
-        car.angle = car.angle + (car.handeling * car.speed/car.topSpeed);    
+        car.angle = car.angle + (car.handling * car.speed/car.topSpeed);    
     };
 
     // Constant application of friction / air resistance
@@ -220,13 +214,15 @@ $(document).ready(function(){
           };
 
 // display game stats  info  visually
-    document.getElementById("stats").innerHTML = "Speed =" + car.speed;
+  time = getTimer();
+  document.getElementById("stats").innerHTML= "Elapsed Time = "+time/1000 +" msec"+'<br/>'+"Car Speed =" + car.speed;
+                                        
  //       $('#stats').html(car.speed);
     //    $('#stats').html(leftbndry,topbndry,rightbndry, bottombndry, car.x, car.y);
         
 
     // Update car velocity (speed + direction)
-    console.log(leftbndry,topbndry,  rightbndry, bottombndry, car.x, car.y)
+  //  console.log(leftbndry,topbndry,  rightbndry, bottombndry, car.x, car.y)
         
     // Plot the new velocity into x and y cords
     car.y = car.y + car.vy;
